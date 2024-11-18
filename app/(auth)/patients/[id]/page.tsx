@@ -1,14 +1,12 @@
-import PatientList from "@/components/ui/PatientList";
 import PatientDetail from "modules/patients/PatientDetail";
-import PatientsCardList from "modules/patients/PatientsCardList";
+
 
 export default function page() {
   
   return (
     <div>
       <main>
-          <PatientsCardList/>
-            {/* <PatientDetail
+            <PatientDetail
             name="John Doe"
             age={30}
             gender="Male"
@@ -22,7 +20,7 @@ export default function page() {
             weight="75 kg"
             height="180 cm"
             activityLevel="Moderate"
-            /> */}
+            />
       </main>
     </div>
   );
