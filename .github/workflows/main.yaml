@@ -173,6 +173,6 @@ jobs:
             -e NEXT_PUBLIC_APP_URL="${NEXT_PUBLIC_APP_URL}" \
             -e NEXT_PUBLIC_STRIPE_PUBLIC_KEY="${NEXT_PUBLIC_STRIPE_PUBLIC_KEY}" \
             -e STRIPE_SECRET_KEY="${STRIPE_SECRET_KEY}" \
-            -e PORT=3001 \
-            -p 3001:3001 "${{ secrets.AWS_REGISTRY_URL }}/${{ vars.REPOSITORY_NAME }}:${{ env.TAG }}"
+            -e PORT=3003 \
+            -p 3003:3003 "${{ secrets.AWS_REGISTRY_URL }}/${{ vars.REPOSITORY_NAME }}:${{ env.TAG }}"
 
