@@ -8,8 +8,8 @@ on:
 
 env:
   TAG: "${{ github.run_number }}"
-  DEV_CONTAINER_NAME: wexel_frontend_dev
-  PROD_CONTAINER_NAME: wexel_frontend_prod
+  DEV_CONTAINER_NAME: wexel_frontend_physio_dev
+  PROD_CONTAINER_NAME: wexel_frontend_physio_prod
 
 jobs:
   # Build Stage  
@@ -36,8 +36,8 @@ jobs:
 
     - name: Push Docker image to Amazon ECR
       run: |
-        aws ecr get-login-password --region ${{ vars.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_REGISTRY_URL }}
-        docker push "${{ secrets.AWS_REGISTRY_URL }}/${{ vars.REPOSITORY_NAME }}:${{ env.TAG }}"
+        aws ecr get-login-password --region ${{ vars.AWS_REGION }} | docker login --username AWS --password-stdin ${{ vars.AWS_REGISTRY_URL }}
+        docker push "${{ vars.AWS_REGISTRY_URL }}/${{ vars.REPOSITORY_NAME }}:${{ env.TAG }}"
 
   # Dev Deploy Stage      
   DevDeploy:
