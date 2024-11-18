@@ -30,7 +30,9 @@ const AppointmentPageView = ({ appointment }: Props) => {
   };
 
   return (
-    <Box paddingTop={0.5} paddingBottom={1.8} paddingLeft={2} paddingRight={4}>
+    <div>
+      
+        <Box paddingTop={0.5} paddingBottom={1.8} paddingLeft={2} paddingRight={4}>
       <BackButton onClick={handleBackClick} />
       <Box
         display="flex"
@@ -95,6 +97,8 @@ const AppointmentPageView = ({ appointment }: Props) => {
         <Note note={note} />
       </Box>
     </Box>
+    </div>
+    
   );
 };
 export default AppointmentPageView;
