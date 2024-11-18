@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface Patient {
   id: number;
@@ -71,10 +72,15 @@ const patients: Patient[] = [
 
 const PatientsCardList = () => {
   const [searchTerm, setSearchTerm] = useState("");
-
+  const router = useRouter();
   const filteredPatients = patients.filter((patient) =>
     patient.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+
+  const goDetails = () => {
+     router.push(`/patients/1`)
+  }
 
   return (
     <div className="min-h-screen w-full 2xl:w-[90%] xl:w-[80%]">
@@ -95,10 +101,11 @@ const PatientsCardList = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredPatients.map((patient) => (
-            <div
+            <button
               key={patient.id}
               className="p-4  rounded-lg bg-white"
               style={{ border: "1px solid #A51008" }}
+              onClick={goDetails}
             >
               <div className="flex flex-row items-center mb-2">
                 <div className="w-16 h-16 rounded-full bg-primary-color/20 flex items-center justify-center text-lg font-semibold mr-4">
@@ -167,7 +174,7 @@ const PatientsCardList = () => {
                   <span>{patient.dateOfBirth}</span> 
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>
