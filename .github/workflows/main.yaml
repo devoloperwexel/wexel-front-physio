@@ -104,8 +104,8 @@ jobs:
             -e NEXT_PUBLIC_APP_URL="${NEXT_PUBLIC_APP_URL}" \
             -e NEXT_PUBLIC_STRIPE_PUBLIC_KEY="${NEXT_PUBLIC_STRIPE_PUBLIC_KEY}" \
             -e STRIPE_SECRET_KEY="${STRIPE_SECRET_KEY}" \
-            -e PORT=3002 \
-            -p 3002:3002 "${{ vars.AWS_REGISTRY_URL }}/${{ vars.REPOSITORY_NAME }}:${{ env.TAG }}"
+            -e PORT=3000 \
+            -p 3002:3000 "${{ vars.AWS_REGISTRY_URL }}/${{ vars.REPOSITORY_NAME }}:${{ env.TAG }}"
 
 
  # Production Deploy Stage      
@@ -173,6 +173,6 @@ jobs:
             -e NEXT_PUBLIC_APP_URL="${NEXT_PUBLIC_APP_URL}" \
             -e NEXT_PUBLIC_STRIPE_PUBLIC_KEY="${NEXT_PUBLIC_STRIPE_PUBLIC_KEY}" \
             -e STRIPE_SECRET_KEY="${STRIPE_SECRET_KEY}" \
-            -e PORT=3003 \
-            -p 3003:3003 "${{ vars.AWS_REGISTRY_URL }}/${{ vars.REPOSITORY_NAME }}:${{ env.TAG }}"
+            -e PORT=3000 \
+            -p 3003:3000 "${{ vars.AWS_REGISTRY_URL }}/${{ vars.REPOSITORY_NAME }}:${{ env.TAG }}"
 
