@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
-import { FC, useState, useCallback } from 'react';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { Questionnaire } from "models/questionnaire.model";
+import { FC, useState, useCallback } from "react";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 interface Question {
   id: string;
@@ -21,10 +22,7 @@ interface MedicalScreeningProps {
   result: string;
   summary: { color: string; count: number }[];
   actions: string[];
-  sections: {
-    title: string;
-    questions: Question[];
-  }[];
+  sections: Questionnaire[];
 }
 
 const MedicalScreeningView: FC<MedicalScreeningProps> = ({
@@ -44,12 +42,10 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
     [expandedSection]
   );
 
-  const renderAnswers = (result: string) => {
-    
-  }
+  const renderAnswers = (result: string) => {};
 
   return (
-    <div >
+    <div>
       <h1 className="text-xl font-semibold mb-4">Medical Screening nº 1:</h1>
 
       <div className="flex justify-start space-x-10 w-full mb-4">
@@ -64,7 +60,8 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
         <div className="flex items-center space-x-2">
           <span className="text-gray-600">Result:</span>
           <span className="font-medium">
-            {result} {result === 'Red' ? '🚩' : result === 'Green' ? '🟢' : '🟡'}
+            {result}{" "}
+            {result === "Red" ? "🚩" : result === "Green" ? "🟢" : "🟡"}
           </span>
         </div>
       </div>
@@ -106,21 +103,28 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
                 <div
                   className={`flex justify-between items-center p-2 ${
                     expandedSection === idx
-                      ? 'bg-primary-color text-white'
-                      : 'bg-white text-black'
+                      ? "bg-primary-color text-white"
+                      : "bg-white text-black"
                   }`}
                   onClick={() => toggleSection(idx)}
                 >
                   <span>{section.title}</span>
-                  {expandedSection === idx ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                  {expandedSection === idx ? (
+                    <IoIosArrowUp />
+                  ) : (
+                    <IoIosArrowDown />
+                  )}
                 </div>
                 {expandedSection === idx && (
                   <div className="border border-gray-200 p-2 bg-primary-color/10">
                     {section.questions.map((q, qIdx) => (
-                      <div key={qIdx} className="mb-2 flex justify-between items-center p-1">
+                      <div
+                        key={qIdx}
+                        className="mb-2 flex justify-between items-center p-1"
+                      >
                         <div className="font-medium">{q.questionText}</div>
-                          {q.answer}
-                          {/* {renderAnswers(q.answer)} */}
+                        {q.answer}
+                        {/* {renderAnswers(q.answer)} */}
                       </div>
                     ))}
                   </div>

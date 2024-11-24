@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Questionnaire } from "models/questionnaire.model";
 
 interface PatientDetailProps {
-  screeningData: Questionnaire;
+  screeningData: Questionnaire[];
   name: string;
   age: number;
   gender: string;
@@ -183,37 +183,7 @@ console.log(screeningData);
                 "Prescribe medication",
                 "Schedule therapy",
               ]}
-              sections={[
-                {
-                  title: "Treatment Goals",
-                  questions: [
-                    {
-                      id: "a1f4d5e7-2b84-4a4b-9d3a-fc13f1f2766c",
-                      questionText: "Do you smoke?",
-                      type: "RADIO",
-                      values: ["Yes", "No"],
-                      answer: "Yes",
-                    },
-                    {
-                      id: "b14c23e8-5a9b-486e-829c-df85a5c6b90a",
-                      questionText: "Do you exercise regularly?",
-                      type: "RADIO",
-                      values: ["Yes", "No"],
-                      answer: "Yes",
-                    },
-                    {
-                      id: "c9e5b7a6-8e51-49a7-89e5-d4c3fe7b601f",
-                      questionText: "If yes, write diagnose",
-                      type: "TEXTAREA",
-                      requiredRef: {
-                        id: "b14c23e8-5a9b-486e-829c-df85a5c6b90a",
-                        value: "Yes",
-                      },
-                      answer: "Hello, How are you ?",
-                    },
-                  ],
-                },
-              ]}
+              sections={screeningData}
             />
           </div>
         );
