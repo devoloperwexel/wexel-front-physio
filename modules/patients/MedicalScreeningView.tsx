@@ -10,7 +10,7 @@ interface Question {
   values?: string[];
   type: QuestionType;
   info?: string;
-  answer: string;
+  answer?: string;
 }
 
 type QuestionType = "RADIO" | "TEXTAREA" | "CHECKBOX" | "TOPIC_QUESTION";
@@ -44,7 +44,8 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
     [expandedSection]
   );
 
-  const renderAnswers = (type: QuestionType, answer: string) => {
+  const renderAnswers = (type: QuestionType, answer?: string) => {
+
     switch (type) {
       case "RADIO":
         return (
@@ -52,20 +53,18 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
             <label>
               <input
                 type="radio"
-                name="answer"
-                value="yes"
-                checked={answer === "yes"}
-                className="mr-2"
+                value="Yes"
+                checked={answer === "Yes"}
+                className="mr-2 items-center appearance-none w-[13px] h-[13px] border-[1px] border-black rounded-full checked:bg-primary-color checked:border-primary-color"
               />
               Yes
             </label>
             <label>
               <input
                 type="radio"
-                name="answer"
-                value="no"
-                checked={answer === "no"}
-                className="mr-2"
+                value="No"
+                checked={answer === "No"}
+                className="mr-2 items-center appearance-none w-[13px] h-[13px] border-[1px] border-black rounded-full checked:bg-primary-color checked:border-primary-color"
               />
               No
             </label>
@@ -80,11 +79,25 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
             placeholder="Enter your answer"
           />
         );
+      
+        case "CHECKBOX":
+          return (
+            <input
+              type="checkbox"
+              checked={answer === "true"}
+              className="mr-2"
+            />
+          );
+        case "TOPIC_QUESTION":
+          return(
+            <></>
+          )
       default:
         return null;
     }
   };
   
+
 
   return (
     <div >
@@ -156,8 +169,8 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
                   <div className="border border-gray-200 p-2 bg-primary-color/10">
                     {section.questions.map((q, qIdx) => (
                       <div key={qIdx} className="mb-2 flex justify-between items-center p-1">
-                        <div className="font-medium">{q.questionText}</div>
-                        {renderAnswers(q.type, q.answer)}
+                        <div className="font-medium" dangerouslySetInnerHTML={{ __html: q.questionText }} />
+                        {renderAnswers(q.type,q.answer)}
                       </div>
                     ))}
                   </div>
