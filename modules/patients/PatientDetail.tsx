@@ -179,43 +179,37 @@ const PatientDetail: FC<PatientDetailProps> = ({
                 "Prescribe medication",
                 "Schedule therapy",
               ]}
-              questions={[
+              sections={[
                 {
-                  title: "General Health Check",
-                  checkedInAppointment: true,
+                  title: "Treatment Goals",
                   questions: [
                     {
-                      question: "Do you experience frequent headaches?",
-                      answer: true,
-                      type: "boolean",
+                      id: "a1f4d5e7-2b84-4a4b-9d3a-fc13f1f2766c",
+                      questionText: "Do you smoke?",
+                      type: "RADIO",
+                      values: ["Yes", "No"],
+                      answer: "Yes"
                     },
                     {
-                      question: "How many hours of sleep do you get per night?",
-                      answer: "7-8 hours",
-                      type: "text",
-                    },
-                  ],
-                },
-                {
-                  title: "Diet and Nutrition",
-                  checkedInAppointment: false,
-                  questions: [
-                    {
-                      question: "Do you follow a balanced diet?",
-                      answer: false,
-                      type: "boolean",
+                      id: "b14c23e8-5a9b-486e-829c-df85a5c6b90a",
+                      questionText: "Do you exercise regularly?",
+                      type: "RADIO",
+                      values: ["Yes", "No"],
+                      answer: "Yes"
                     },
                     {
-                      question: "How many meals do you eat per day?",
-                      answer: "3 meals",
-                      type: "text",
-                    },
-                  ],
+                      id: "c9e5b7a6-8e51-49a7-89e5-d4c3fe7b601f",
+                      questionText: "If yes, write diagnose",
+                      type: "TEXTAREA",
+                      requiredRef: { id: "b14c23e8-5a9b-486e-829c-df85a5c6b90a", value: "Yes" },
+                      answer: "Hello, How are you ?"
+                    }
+                  ]
                 },
               ]}
             />
           </div>
-        ); // MedicalScreeningComponent
+        ); 
       default:
         return null;
     }

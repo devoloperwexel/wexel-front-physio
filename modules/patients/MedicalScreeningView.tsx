@@ -3,20 +3,27 @@
 import { FC, useState, useCallback } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
+interface Question {
+  id: string;
+  requiredRef?: { id: string; value: string };
+  questionText: string;
+  values?: string[];
+  type: QuestionType;
+  info?: string;
+  answer: string;
+}
+
+type QuestionType = "RADIO" | "TEXTAREA" | "CHECKBOX" | "TOPIC_QUESTION";
+
 interface MedicalScreeningProps {
   date: string;
   status: string;
   result: string;
   summary: { color: string; count: number }[];
   actions: string[];
-  questions: {
+  sections: {
     title: string;
-    checkedInAppointment: boolean;
-    questions: {
-      question: string;
-      answer: string | boolean;
-      type: 'text' | 'boolean';
-    }[];
+    questions: Question[];
   }[];
 }
 
@@ -26,17 +33,20 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
   result,
   summary,
   actions,
-  questions,
+  sections,
 }) => {
   const [expandedSection, setExpandedSection] = useState<number | null>(null);
 
-  // Memoize the toggle function to avoid re-creating it on each render
   const toggleSection = useCallback(
     (idx: number) => {
       setExpandedSection(expandedSection === idx ? null : idx);
     },
     [expandedSection]
   );
+
+  const renderAnswers = (result: string) => {
+    
+  }
 
   return (
     <div >
@@ -90,7 +100,7 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
 
       <table className="w-full border-collapse border border-gray-200">
         <tbody>
-          {questions.map((section, idx) => (
+          {sections.map((section, idx) => (
             <tr key={idx} className="border-b">
               <td className="font-semibold cursor-pointer border border-gray-200">
                 <div
@@ -108,26 +118,11 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
                   <div className="border border-gray-200 p-2 bg-primary-color/10">
                     {section.questions.map((q, qIdx) => (
                       <div key={qIdx} className="mb-2 flex justify-between items-center p-1">
-                        <div className="font-medium">{q.question}</div>
-                        {q.type === 'text' ? (
-                          <div className="text-gray-700">{q.answer}</div>
-                        ) : (
-                          <div className="flex space-x-4 mt-1">
-                            <label className="flex items-center space-x-1">
-                              <input type="radio" checked={q.answer === true} readOnly />
-                              <span>Yes</span>
-                            </label>
-                            <label className="flex items-center space-x-1">
-                              <input type="radio" checked={q.answer === false} readOnly />
-                              <span>No</span>
-                            </label>
-                          </div>
-                        )}
+                        <div className="font-medium">{q.questionText}</div>
+                          {q.answer}
+                          {/* {renderAnswers(q.answer)} */}
                       </div>
                     ))}
-                    <div className="text-sm text-gray-600 mt-2 p-1">
-                      Checked in Appointment: {section.checkedInAppointment ? 'Yes' : 'No'}
-                    </div>
                   </div>
                 )}
               </td>
