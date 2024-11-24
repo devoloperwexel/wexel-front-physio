@@ -4,9 +4,10 @@ import { FC, useState } from "react";
 import MedicalScreeningView from "./MedicalScreeningView";
 import { IoArrowBack } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import { Questionnaire } from "models/questionnaire.model";
 
 interface PatientDetailProps {
-  screeningData:any,
+  screeningData: Questionnaire;
   name: string;
   age: number;
   gender: string;
@@ -36,9 +37,11 @@ const PatientDetail: FC<PatientDetailProps> = ({
   weight,
   height,
   activityLevel,
+  screeningData,
 }) => {
   const [activeTab, setActiveTab] = useState<string>("Overview");
   const router = useRouter();
+console.log(screeningData);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -189,50 +192,55 @@ const PatientDetail: FC<PatientDetailProps> = ({
                       questionText: "Do you smoke?",
                       type: "RADIO",
                       values: ["Yes", "No"],
-                      answer: "Yes"
+                      answer: "Yes",
                     },
                     {
                       id: "b14c23e8-5a9b-486e-829c-df85a5c6b90a",
                       questionText: "Do you exercise regularly?",
                       type: "RADIO",
                       values: ["Yes", "No"],
-                      answer: "Yes"
+                      answer: "Yes",
                     },
                     {
                       id: "c9e5b7a6-8e51-49a7-89e5-d4c3fe7b601f",
                       questionText: "If yes, write diagnose",
                       type: "TEXTAREA",
-                      requiredRef: { id: "b14c23e8-5a9b-486e-829c-df85a5c6b90a", value: "Yes" },
-                      answer: "Hello, How are you ?"
-                    }
-                  ]
+                      requiredRef: {
+                        id: "b14c23e8-5a9b-486e-829c-df85a5c6b90a",
+                        value: "Yes",
+                      },
+                      answer: "Hello, How are you ?",
+                    },
+                  ],
                 },
               ]}
             />
           </div>
-        ); 
+        );
       default:
         return null;
     }
   };
 
   const goBack = () => {
-     router.push('/patients')
-  }
+    router.push("/patients");
+  };
 
   return (
     <>
-    <div className="flex justify-between items-center pr-8 sm:pr-10">
-          <h1 className="text-[20px] sm:text-[32px] font-bold text-primary-color py-3 px-8 sm:px-10 sm:py-5">
-            Patient&apos;s Name
-          </h1>
-          <button className="flex space-x-2 justify-center items-center px-3 py-2 text-[15px] font-medium bg-primary-color text-white rounded-sm" onClick={goBack}>
-            <IoArrowBack />
-            <p>Back</p>
-          </button>
-        </div>
+      <div className="flex justify-between items-center pr-8 sm:pr-10">
+        <h1 className="text-[20px] sm:text-[32px] font-bold text-primary-color py-3 px-8 sm:px-10 sm:py-5">
+          Patient&apos;s Name
+        </h1>
+        <button
+          className="flex space-x-2 justify-center items-center px-3 py-2 text-[15px] font-medium bg-primary-color text-white rounded-sm"
+          onClick={goBack}
+        >
+          <IoArrowBack />
+          <p>Back</p>
+        </button>
+      </div>
       <div className="min-h-screen w-[80%]">
-        
         <div className="px-8 sm:px-10 rounded-md ">
           {/* Top Navigation */}
           <div className="border-b border-gray-200 mb-4">
