@@ -17,7 +17,7 @@ const InformationSection = ({ totalAppointment }: Props) => {
       <p className="text-[12px] sm:text-[20px] font-medium mb-2 sm:mb-3">
         Welcome
       </p>
-      <p className="text-[14px] sm:text-[20px] font-semibold mb-2 sm:mb-3">
+      <p className="text-[14px] sm:text-[20px] font-semibold mb-2 sm:mb-3 capitalize">
         {infoList.physiosName}
       </p>
       {!totalAppointment ? (
