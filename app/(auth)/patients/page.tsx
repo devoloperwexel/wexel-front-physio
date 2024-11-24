@@ -1,14 +1,21 @@
 import PatientList from "@/components/ui/PatientList";
+import API from "constants/users";
 import PatientDetail from "modules/patients/PatientDetail";
 import PatientsCardList from "modules/patients/PatientsCardList";
+import { auth } from "utils/auth";
+import request from "utils/request";
 
-export default function page() {
-  
+export default async function page() {
+  const authRes = await auth();
+  const patients = await request(API.GET_USERS, {
+    query: `doctorId=${authRes?.user.id}&limit=10&role=user`,
+  });
+
   return (
     <div>
       <main>
-          <PatientsCardList/>
-            {/* <PatientDetail
+        <PatientsCardList patients={patients?.data?.results} />
+        {/* <PatientDetail
             name="John Doe"
             age={30}
             gender="Male"
@@ -27,5 +34,3 @@ export default function page() {
     </div>
   );
 }
-
-

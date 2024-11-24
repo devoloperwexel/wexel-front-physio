@@ -35,8 +35,8 @@ type AppointmentCardProp = {
 };
 
 export const AppointmentCard = ({ appointment }: AppointmentCardProp) => {
-  const { id, appointmentTime, doctorDetail } = appointment;
-  const { profilePictureUrl, name } = doctorDetail.user;
+  const { id, appointmentTime, patientDetail } = appointment;
+  const { profilePictureUrl, name } = patientDetail;
   //
   const router = useRouter();
   const { formattedDate, formattedTime } = formatISODateTime(appointmentTime);
@@ -61,19 +61,21 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProp) => {
         flexDirection="column"
         alignItems="center"
         paddingX={1}
+        sx={{
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+          textTransform: 'capitalize'
+        }}
       >
-        <Typography fontWeight="700">{`Dr. ${truncateText(
-          name,
-          30
-        )}`}</Typography>
-        <StyledTypography color="#A51008" fontSize={14}>
-          {truncateText(doctorDetail.specialty, 30)}
-        </StyledTypography>
+        <Typography textOverflow="ellipsis" fontWeight="700">
+          {name}
+        </Typography>
         <Divider
           sx={{ color: "#00000033", marginY: 2, borderBottomWidth: "1px" }}
           flexItem
         />
-        <Row width="200px">
+        <Row width="200px" textOverflow="ellipsis">
           <Typography color="#1B1999" fontSize={13}>
             ID{" "}
           </Typography>

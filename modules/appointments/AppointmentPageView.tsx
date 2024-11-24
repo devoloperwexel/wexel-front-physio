@@ -17,12 +17,12 @@ type Props = {
 const AppointmentPageView = ({ appointment }: Props) => {
   const router = useRouter();
 
-  const { id, doctorDetail, note, appointmentTime } = appointment;
+  const { id, patientDetail, note, appointmentTime } = appointment;
 
   const { formattedDate, formattedTime } = formatISODateTime(appointmentTime);
 
   const handleBackClick = () => {
-    router.push("/appointments");
+    router.back();
   };
 
   const handleJoin = () => {
@@ -49,22 +49,23 @@ const AppointmentPageView = ({ appointment }: Props) => {
           borderRight="2px dashed"
           boxSizing="border-box"
           paddingRight={20}
+          textTransform="capitalize"
         >
-          <Image
+          {/* <Image
             alt=""
-            src={doctorDetail.user.profilePictureUrl}
+            src={patientDetail.profilePictureUrl}
             width={0}
             height={0}
             sizes="100vw"
             style={{ width: "100%", height: "44%", borderRadius: 6 }}
-          />
+          /> */}
           <Typography
             fontWeight="700"
             fontSize="22px"
             marginTop={2}
-          >{`Dr. ${truncateText(doctorDetail.user.name, 50)}`}</Typography>
+          >{truncateText(patientDetail.name, 50)}</Typography>
           <Typography color="#A51008" fontWeight="500">
-            {doctorDetail.specialty}
+            {/* {patientDetail.specialty} */}
           </Typography>
           <Typography
             color="#1B1999"
