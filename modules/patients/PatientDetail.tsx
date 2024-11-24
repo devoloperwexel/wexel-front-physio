@@ -41,7 +41,7 @@ const PatientDetail: FC<PatientDetailProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<string>("Overview");
   const router = useRouter();
-console.log(screeningData);
+  console.log(screeningData);
 
   const renderContent = () => {
     switch (activeTab) {

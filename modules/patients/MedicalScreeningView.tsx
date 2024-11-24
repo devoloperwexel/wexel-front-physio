@@ -1,18 +1,18 @@
 "use client";
 
-import { Questionnaire } from "models/questionnaire.model";
-import { FC, useState, useCallback } from "react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { Questionnaire } from 'models/questionnaire.model';
+import { FC, useState, useCallback } from 'react';
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
-interface Question {
-  id: string;
-  requiredRef?: { id: string; value: string };
-  questionText: string;
-  values?: string[];
-  type: QuestionType;
-  info?: string;
-  answer: string;
-}
+// interface Question {
+//   id: string;
+//   questionText: string;
+//   type: QuestionType;
+//   values?: string[]; 
+//   info?: string | null | undefined; 
+//   requiredRef?: { id: string; value: string } | null;
+//   answer?: string | undefined;
+// }
 
 type QuestionType = "RADIO" | "TEXTAREA" | "CHECKBOX" | "TOPIC_QUESTION";
 
@@ -42,7 +42,55 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
     [expandedSection]
   );
 
-  const renderAnswers = (result: string) => {};
+  const renderAnswers = (type: QuestionType, answer?: string | null) => {
+
+    switch (type) {
+      case "RADIO":
+        return (
+          <div className="flex items-center space-x-4">
+            <label>
+              <input
+                type="radio"
+                value="Yes"
+                checked={answer === "Yes"}
+                className="mr-2 items-center appearance-none w-[13px] h-[13px] border-[1px] border-black rounded-full checked:bg-primary-color checked:border-primary-color"
+              />
+              Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="No"
+                checked={answer === "No"}
+                className={`mr-2 items-center appearance-none w-[13px] h-[13px] border-[1px] border-black rounded-full checked:bg-primary-color checked:border-primary-color`}
+              />
+              No
+            </label>
+          </div>
+        );
+       
+        case "TEXTAREA":
+          return ( 
+            <input
+              className="w-[80%] p-2 border rounded"
+              value={answer??""}
+            />
+          ) 
+
+        case "CHECKBOX":
+          return (
+            <input
+              type="checkbox"
+              checked={answer === "true"}
+              className="mr-2"
+            />
+          );
+      default:
+        return null;
+    }
+  };
+  
+
 
   return (
     <div>
@@ -118,13 +166,9 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
                 {expandedSection === idx && (
                   <div className="border border-gray-200 p-2 bg-primary-color/10">
                     {section.questions.map((q, qIdx) => (
-                      <div
-                        key={qIdx}
-                        className="mb-2 flex justify-between items-center p-1"
-                      >
-                        <div className="font-medium">{q.questionText}</div>
-                        {q.answer}
-                        {/* {renderAnswers(q.answer)} */}
+                      <div key={qIdx} className="mb-2 flex justify-between items-center p-1">
+                        {q.requiredRef && q.requiredRef.value === "No" ? null : <div className="font-medium" dangerouslySetInnerHTML={{ __html: q.questionText }} />}
+                        {q.requiredRef && q.requiredRef.value === "No" ? null : renderAnswers(q.type, q.answer)}
                       </div>
                     ))}
                   </div>

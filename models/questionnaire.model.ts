@@ -11,7 +11,7 @@ export interface Question {
   questionText: string;
   type: "RADIO" | "TEXTAREA" | "CHECKBOX" | "TOPIC_QUESTION"; 
   values: string[]; 
-  info?: string;
-  requiredRef: { id: string; value: string }; 
-  answer?: string;
+  info?: string | null;
+  requiredRef: { id: string; value: string } | null; 
+  answer?: string | null;
 }
