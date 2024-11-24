@@ -27,6 +27,8 @@ const parseJSON = (response: AxiosResponse<any, any>) => {
  * @return {object|undefined} Returns either the response, or throws an error
  */
 const errorHandling = async (error: any) => {
+  console.log(error);
+  
   const errorResponse = new ResponseError(error);
   errorResponse.message = error?.response?.data;
   throw errorResponse;

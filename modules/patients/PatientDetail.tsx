@@ -6,6 +6,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 
 interface PatientDetailProps {
+  screeningData:any,
   name: string;
   age: number;
   gender: string;
@@ -43,7 +44,7 @@ const PatientDetail: FC<PatientDetailProps> = ({
     switch (activeTab) {
       case "Overview":
         return (
-          <div className="w-full 2xl:w-[80%] xl:w-[70%]  border border-primary-color p-12">
+          <div className="w-full 2xl:w-[80%] xl:w-[70%]  border border-primary-color p-12 capitalize">
             <div className="flex items-center mb-2 gap-4">
               <div className="w-28 h-28 rounded-full bg-gray-300 flex items-center justify-center text-lg font-semibold mr-4">
                 <svg

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import User from "models/user.model";
 
 interface Patient {
   id: number;
@@ -69,27 +70,28 @@ const patients: Patient[] = [
     dateOfBirth: "1987-03-10",
   },
 ];
-
-const PatientsCardList = () => {
+type Props = {
+  patients: User[];
+};
+const PatientsCardList = ({ patients }: Props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
-  const filteredPatients = patients.filter((patient) =>
-    patient.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredPatients = patients.filter((patient) =>
+  //   patient.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
-
-  const goDetails = () => {
-     router.push(`/patients/1`)
-  }
+  const goDetails = (id: string) => {
+    router.push(`/patients/${id}`);
+  };
 
   return (
-    <div className="min-h-screen w-full 2xl:w-[90%] xl:w-[80%]">
-       <div>
+    <div className="min-h-screen w-full 2xl:w-[90%] xl:w-[80%] capitalize">
+      <div>
         <h1 className="text-[20px] sm:text-[32px] font-bold text-primary-color py-3 px-8 sm:px-10 sm:py-5">
           Patients
         </h1>
       </div>
-      <div className="flex flex-col px-8 sm:px-10  ">
+      <div className="flex flex-col px-8 sm:px-10 capitalize ">
         <div className="mb-4">
           <input
             type="text"
@@ -100,12 +102,12 @@ const PatientsCardList = () => {
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredPatients.map((patient) => (
+          {patients.map((patient) => (
             <button
               key={patient.id}
               className="p-4  rounded-lg bg-white"
               style={{ border: "1px solid #A51008" }}
-              onClick={goDetails}
+              onClick={() => goDetails(patient.id)}
             >
               <div className="flex flex-row items-center mb-2">
                 <div className="w-16 h-16 rounded-full bg-primary-color/20 flex items-center justify-center text-lg font-semibold mr-4">
@@ -138,12 +140,13 @@ const PatientsCardList = () => {
                   </svg>
                 </div>
                 <div className="flex flex-col space-y-1">
-                  <div className="font-semibold">{patient.name}</div>
+                  <div className="font-semibold capitalize">{patient.name}</div>
                   <div className="text-gray-600">
-                    {patient.gender} - {patient.age} Years
+                    {patient.gender}
+                    {/*  - 10 Years */}
                   </div>
                   <div className="flex space-x-2 pt-2">
-                    {patient.languages.map((language) => (
+                    {patient?.languages?.map((language) => (
                       <span
                         key={language}
                         className="bg-gray-200 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded"
@@ -156,8 +159,8 @@ const PatientsCardList = () => {
               </div>
               <div className="flex justify-between w-full pt-4">
                 <div className="text-gray-600 mb-1 flex flex-col">
-                  <p className="font-bold text-gray-800">Screening result</p>
-                  <span
+                  {/* <p className="font-bold text-gray-800">Screening result</p>
+                   <span
                     className={`font-semibold ${
                       patient.screeningResult === "Green"
                         ? "text-green-600"
@@ -167,11 +170,11 @@ const PatientsCardList = () => {
                     }`}
                   >
                     {patient.screeningResult}
-                  </span>
+                  </span> */}
                 </div>
                 <div className="text-gray-600 flex flex-col">
-                   <p className="font-bold text-gray-800">Date of Birth</p>
-                  <span>{patient.dateOfBirth}</span> 
+                  <p className="font-bold text-gray-800">Date of Birth</p>
+                  <span>{patient.birthDay ?? "-"}</span>
                 </div>
               </div>
             </button>

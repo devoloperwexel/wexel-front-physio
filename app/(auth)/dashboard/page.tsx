@@ -7,15 +7,25 @@ import request from "utils/request";
 export default async function page() {
   try {
     const authRes = await auth();
-    const appointments = await request(API.GET_APPOINTMENTS, {
-      query: `doctorId=${authRes?.user.id}&limit=1`,
+
+    const currentDate = new Date();
+    const formattedCurrentDate = currentDate.toISOString().split("T")[0];
+    currentDate.setDate(currentDate.getDate() + 1);
+    const formattedNextDate = currentDate.toISOString().split("T")[0];
+
+    const appointment = await request(API.GET_APPOINTMENTS, {
+      query: `doctorId=${authRes?.user.id}&appointmentDateFrom=${formattedCurrentDate}&appointmentDateTo=${formattedNextDate}&limit=1&appointmentTime:desc`,
     });
-    console.log(appointments);
+
+    const appointments = await request(API.GET_APPOINTMENTS, {
+      query: `doctorId=${authRes?.user.id}&limit=10&appointmentTime:desc`,
+    });
 
     return (
       <Dashboard
-        appointment={appointments?.data?.results[0]}
-        totalAppointment={appointments?.data?.totalResults || 0}
+        appointment={appointment?.data?.results[0]}
+        appointments={appointments?.data?.results}
+        totalAppointment={appointment?.data?.totalResults || 0}
       />
     );
   } catch (e) {

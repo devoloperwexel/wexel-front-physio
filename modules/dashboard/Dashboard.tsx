@@ -9,10 +9,15 @@ import { formatDashboardDateTime } from "utils/time";
 
 type Props = {
   appointment: Appointment;
+  appointments: Appointment[];
   totalAppointment: number;
 };
-export default function Dashboard({ appointment, totalAppointment }: Props) {
-  const { patientDetail } = appointment;
+export default function Dashboard({
+  appointment,
+  appointments,
+  totalAppointment,
+}: Props) {
+  const { id, patientDetail } = appointment;
 
   return (
     <>
@@ -29,10 +34,13 @@ export default function Dashboard({ appointment, totalAppointment }: Props) {
         <div className="flex flex-col md:flex-col lg:flex-row gap-10 md:gap-20 w-full 2xl:w-[80%] xl:w-[80%]">
           <div className="flex-1">
             <EventCard
+              appointmentId={id}
               title="Upcoming Appointment"
               physioName={"Patient's name"}
               eventTitle={patientDetail.name}
-              eventDateTime={formatDashboardDateTime(appointment.appointmentTime)}
+              eventDateTime={formatDashboardDateTime(
+                appointment.appointmentTime
+              )}
               duration={"30 Min"}
             />
           </div>
@@ -42,7 +50,7 @@ export default function Dashboard({ appointment, totalAppointment }: Props) {
         </div>
 
         <div className="flex w-full 2xl:w-[80%] xl:w-[80%]">
-          <PatientList result={"Red"} />
+          <PatientList result={"Red"} appointments={appointments} />
         </div>
       </div>
     </>
