@@ -4,8 +4,10 @@ import { FC, useState } from "react";
 import MedicalScreeningView from "./MedicalScreeningView";
 import { IoArrowBack } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import { Questionnaire } from "models/questionnaire.model";
 
 interface PatientDetailProps {
+  screeningData: Questionnaire[];
   name: string;
   age: number;
   gender: string;
@@ -35,15 +37,17 @@ const PatientDetail: FC<PatientDetailProps> = ({
   weight,
   height,
   activityLevel,
+  screeningData,
 }) => {
   const [activeTab, setActiveTab] = useState<string>("Overview");
   const router = useRouter();
+  console.log(screeningData);
 
   const renderContent = () => {
     switch (activeTab) {
       case "Overview":
         return (
-          <div className="w-full 2xl:w-[80%] xl:w-[70%]  border border-primary-color p-12">
+          <div className="w-full 2xl:w-[80%] xl:w-[70%]  border border-primary-color p-12 capitalize">
             <div className="flex items-center mb-2 gap-4">
               <div className="w-28 h-28 rounded-full bg-gray-300 flex items-center justify-center text-lg font-semibold mr-4">
                 <svg
@@ -179,65 +183,34 @@ const PatientDetail: FC<PatientDetailProps> = ({
                 "Prescribe medication",
                 "Schedule therapy",
               ]}
-              questions={[
-                {
-                  title: "General Health Check",
-                  checkedInAppointment: true,
-                  questions: [
-                    {
-                      question: "Do you experience frequent headaches?",
-                      answer: true,
-                      type: "boolean",
-                    },
-                    {
-                      question: "How many hours of sleep do you get per night?",
-                      answer: "7-8 hours",
-                      type: "text",
-                    },
-                  ],
-                },
-                {
-                  title: "Diet and Nutrition",
-                  checkedInAppointment: false,
-                  questions: [
-                    {
-                      question: "Do you follow a balanced diet?",
-                      answer: false,
-                      type: "boolean",
-                    },
-                    {
-                      question: "How many meals do you eat per day?",
-                      answer: "3 meals",
-                      type: "text",
-                    },
-                  ],
-                },
-              ]}
+              sections={screeningData}
             />
           </div>
-        ); // MedicalScreeningComponent
+        );
       default:
         return null;
     }
   };
 
   const goBack = () => {
-     router.push('/patients')
-  }
+    router.push("/patients");
+  };
 
   return (
     <>
-    <div className="flex justify-between items-center pr-8 sm:pr-10">
-          <h1 className="text-[20px] sm:text-[32px] font-bold text-primary-color py-3 px-8 sm:px-10 sm:py-5">
-            Patient&apos;s Name
-          </h1>
-          <button className="flex space-x-2 justify-center items-center px-3 py-2 text-[15px] font-medium bg-primary-color text-white rounded-sm" onClick={goBack}>
-            <IoArrowBack />
-            <p>Back</p>
-          </button>
-        </div>
+      <div className="flex justify-between items-center pr-8 sm:pr-10">
+        <h1 className="text-[20px] sm:text-[32px] font-bold text-primary-color py-3 px-8 sm:px-10 sm:py-5">
+          Patient&apos;s Name
+        </h1>
+        <button
+          className="flex space-x-2 justify-center items-center px-3 py-2 text-[15px] font-medium bg-primary-color text-white rounded-sm"
+          onClick={goBack}
+        >
+          <IoArrowBack />
+          <p>Back</p>
+        </button>
+      </div>
       <div className="min-h-screen w-[80%]">
-        
         <div className="px-8 sm:px-10 rounded-md ">
           {/* Top Navigation */}
           <div className="border-b border-gray-200 mb-4">

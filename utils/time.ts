@@ -32,3 +32,27 @@ export function formatISODateTime(isoString: string) {
 
   return { formattedDate, formattedTime };
 }
+
+export function formatDashboardDateTime(input: string): string {
+  // Parse the input time
+  const date = new Date(input);
+
+  // Extract year, month, day, and time components
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
+  const day = date.getDate().toString().padStart(2, '0');
+  
+  // Format time in a 12-hour clock with leading zero
+  let hours = date.getHours();
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const period = hours >= 12 ? 'PM' : 'AM';
+  
+  // Convert to 12-hour format
+  hours = hours % 12 || 12; // If hour is 0, use 12
+  
+  // Combine date and time
+  const formattedDate = `${year}-${month}-${day}`;
+  const formattedTime = `${hours}.${minutes} ${period}`;
+  
+  return `${formattedDate}, ${formattedTime}`;
+}

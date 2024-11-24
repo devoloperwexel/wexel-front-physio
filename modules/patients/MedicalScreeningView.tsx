@@ -1,7 +1,20 @@
-'use client';
+"use client";
 
+import { Questionnaire } from 'models/questionnaire.model';
 import { FC, useState, useCallback } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+
+// interface Question {
+//   id: string;
+//   questionText: string;
+//   type: QuestionType;
+//   values?: string[]; 
+//   info?: string | null | undefined; 
+//   requiredRef?: { id: string; value: string } | null;
+//   answer?: string | undefined;
+// }
+
+type QuestionType = "RADIO" | "TEXTAREA" | "CHECKBOX" | "TOPIC_QUESTION";
 
 interface MedicalScreeningProps {
   date: string;
@@ -9,15 +22,7 @@ interface MedicalScreeningProps {
   result: string;
   summary: { color: string; count: number }[];
   actions: string[];
-  questions: {
-    title: string;
-    checkedInAppointment: boolean;
-    questions: {
-      question: string;
-      answer: string | boolean;
-      type: 'text' | 'boolean';
-    }[];
-  }[];
+  sections: Questionnaire[];
 }
 
 const MedicalScreeningView: FC<MedicalScreeningProps> = ({
@@ -26,11 +31,10 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
   result,
   summary,
   actions,
-  questions,
+  sections,
 }) => {
   const [expandedSection, setExpandedSection] = useState<number | null>(null);
 
-  // Memoize the toggle function to avoid re-creating it on each render
   const toggleSection = useCallback(
     (idx: number) => {
       setExpandedSection(expandedSection === idx ? null : idx);
@@ -38,8 +42,58 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
     [expandedSection]
   );
 
+  const renderAnswers = (type: QuestionType, answer?: string | null) => {
+
+    switch (type) {
+      case "RADIO":
+        return (
+          <div className="flex items-center space-x-4">
+            <label>
+              <input
+                type="radio"
+                value="Yes"
+                checked={answer === "Yes"}
+                className="mr-2 items-center appearance-none w-[13px] h-[13px] border-[1px] border-black rounded-full checked:bg-primary-color checked:border-primary-color"
+              />
+              Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="No"
+                checked={answer === "No"}
+                className={`mr-2 items-center appearance-none w-[13px] h-[13px] border-[1px] border-black rounded-full checked:bg-primary-color checked:border-primary-color`}
+              />
+              No
+            </label>
+          </div>
+        );
+       
+        case "TEXTAREA":
+          return ( 
+            <input
+              className="w-[80%] p-2 border rounded"
+              value={answer??""}
+            />
+          ) 
+
+        case "CHECKBOX":
+          return (
+            <input
+              type="checkbox"
+              checked={answer === "true"}
+              className="mr-2"
+            />
+          );
+      default:
+        return null;
+    }
+  };
+  
+
+
   return (
-    <div >
+    <div>
       <h1 className="text-xl font-semibold mb-4">Medical Screening nº 1:</h1>
 
       <div className="flex justify-start space-x-10 w-full mb-4">
@@ -54,7 +108,8 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
         <div className="flex items-center space-x-2">
           <span className="text-gray-600">Result:</span>
           <span className="font-medium">
-            {result} {result === 'Red' ? '🚩' : result === 'Green' ? '🟢' : '🟡'}
+            {result}{" "}
+            {result === "Red" ? "🚩" : result === "Green" ? "🟢" : "🟡"}
           </span>
         </div>
       </div>
@@ -90,44 +145,32 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
 
       <table className="w-full border-collapse border border-gray-200">
         <tbody>
-          {questions.map((section, idx) => (
+          {sections.map((section, idx) => (
             <tr key={idx} className="border-b">
               <td className="font-semibold cursor-pointer border border-gray-200">
                 <div
                   className={`flex justify-between items-center p-2 ${
                     expandedSection === idx
-                      ? 'bg-primary-color text-white'
-                      : 'bg-white text-black'
+                      ? "bg-primary-color text-white"
+                      : "bg-white text-black"
                   }`}
                   onClick={() => toggleSection(idx)}
                 >
                   <span>{section.title}</span>
-                  {expandedSection === idx ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                  {expandedSection === idx ? (
+                    <IoIosArrowUp />
+                  ) : (
+                    <IoIosArrowDown />
+                  )}
                 </div>
                 {expandedSection === idx && (
                   <div className="border border-gray-200 p-2 bg-primary-color/10">
                     {section.questions.map((q, qIdx) => (
                       <div key={qIdx} className="mb-2 flex justify-between items-center p-1">
-                        <div className="font-medium">{q.question}</div>
-                        {q.type === 'text' ? (
-                          <div className="text-gray-700">{q.answer}</div>
-                        ) : (
-                          <div className="flex space-x-4 mt-1">
-                            <label className="flex items-center space-x-1">
-                              <input type="radio" checked={q.answer === true} readOnly />
-                              <span>Yes</span>
-                            </label>
-                            <label className="flex items-center space-x-1">
-                              <input type="radio" checked={q.answer === false} readOnly />
-                              <span>No</span>
-                            </label>
-                          </div>
-                        )}
+                        {q.requiredRef && q.requiredRef.value === "No" ? null : <div className="font-medium" dangerouslySetInnerHTML={{ __html: q.questionText }} />}
+                        {q.requiredRef && q.requiredRef.value === "No" ? null : renderAnswers(q.type, q.answer)}
                       </div>
                     ))}
-                    <div className="text-sm text-gray-600 mt-2 p-1">
-                      Checked in Appointment: {section.checkedInAppointment ? 'Yes' : 'No'}
-                    </div>
                   </div>
                 )}
               </td>
