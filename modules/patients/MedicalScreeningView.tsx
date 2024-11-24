@@ -44,9 +44,47 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
     [expandedSection]
   );
 
-  const renderAnswers = (result: string) => {
-    
-  }
+  const renderAnswers = (type: QuestionType, answer: string) => {
+    switch (type) {
+      case "RADIO":
+        return (
+          <div className="flex items-center space-x-4">
+            <label>
+              <input
+                type="radio"
+                name="answer"
+                value="yes"
+                checked={answer === "yes"}
+                className="mr-2"
+              />
+              Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="answer"
+                value="no"
+                checked={answer === "no"}
+                className="mr-2"
+              />
+              No
+            </label>
+          </div>
+        );
+      case "TEXTAREA":
+        return (
+          <textarea
+            className="w-full p-2 border rounded"
+            value={answer}
+            rows={4}
+            placeholder="Enter your answer"
+          />
+        );
+      default:
+        return null;
+    }
+  };
+  
 
   return (
     <div >
@@ -119,8 +157,7 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
                     {section.questions.map((q, qIdx) => (
                       <div key={qIdx} className="mb-2 flex justify-between items-center p-1">
                         <div className="font-medium">{q.questionText}</div>
-                          {q.answer}
-                          {/* {renderAnswers(q.answer)} */}
+                        {renderAnswers(q.type, q.answer)}
                       </div>
                     ))}
                   </div>
