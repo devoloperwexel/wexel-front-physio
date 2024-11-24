@@ -4,13 +4,12 @@ import { FaCalendarAlt, FaClock } from 'react-icons/fa';
 interface EventCardProps {
   physioName: string;
   eventTitle: string;
-  eventDate: string;
-  eventTime: string;
+  eventDateTime: string;
   duration: string;
   title: string;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ title,physioName, eventTitle, eventDate, eventTime, duration }) => {
+const EventCard: React.FC<EventCardProps> = ({ title,physioName, eventTitle, eventDateTime, duration }) => {
   return (
     <div className="bg-white rounded-md px-6 pt-4 flex flex-col justify-start items-center h-full border border-gray-200">
       <p className="text-[20px] font-bold text-primary-color">{title}</p>
@@ -22,7 +21,7 @@ const EventCard: React.FC<EventCardProps> = ({ title,physioName, eventTitle, eve
       <div className='flex flex-col items-start py-3'>
         <div className="flex items-center justify-center mb-2 text-[17px]">
           <FaCalendarAlt className="text-primary-color mr-2" />
-          <span>{eventDate}, {eventTime}</span>
+          <span>{eventDateTime}</span>
         </div>
         <div className="flex items-center justify-center mb-2 text-[17px]">
           <FaClock className="text-primary-color mr-2" />

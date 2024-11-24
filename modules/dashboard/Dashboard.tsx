@@ -4,8 +4,16 @@ import Calender from "@/components/ui/Calender";
 import EventCard from "@/components/ui/EventCard";
 import InformationSection from "@/components/ui/InformationSection";
 import PatientList from "@/components/ui/PatientList";
+import Appointment from "models/appointment.model";
+import { formatDashboardDateTime } from "utils/time";
 
-export default function Dashboard() {
+type Props = {
+  appointment: Appointment;
+  totalAppointment: number;
+};
+export default function Dashboard({ appointment, totalAppointment }: Props) {
+  const { patientDetail } = appointment;
+
   return (
     <>
       <div>
@@ -16,16 +24,15 @@ export default function Dashboard() {
 
       <div className="flex flex-col gap-10 sm:gap-12 px-8 sm:px-10">
         <div className="flex-1 w-full 2xl:w-[80%] xl:w-[80%]">
-          <InformationSection />
+          <InformationSection totalAppointment={totalAppointment} />
         </div>
         <div className="flex flex-col md:flex-col lg:flex-row gap-10 md:gap-20 w-full 2xl:w-[80%] xl:w-[80%]">
           <div className="flex-1">
             <EventCard
               title="Upcoming Appointment"
               physioName={"Patient's name"}
-              eventTitle={"Intial Talk"}
-              eventDate={"2022-12-10"}
-              eventTime={"9.00"}
+              eventTitle={patientDetail.name}
+              eventDateTime={formatDashboardDateTime(appointment.appointmentTime)}
               duration={"30 Min"}
             />
           </div>

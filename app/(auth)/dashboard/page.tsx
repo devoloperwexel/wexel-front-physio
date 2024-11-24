@@ -7,16 +7,19 @@ import request from "utils/request";
 export default async function page() {
   try {
     const authRes = await auth();
-    const appointment = await request(API.GET_APPOINTMENTS, {
-      userId: authRes?.user.id,
-      query: "limit=10",
+    const appointments = await request(API.GET_APPOINTMENTS, {
+      query: `doctorId=${authRes?.user.id}&limit=1`,
     });
-    console.log(process.env.NEXT_PUBLIC_BASE_URL);
+    console.log(appointments);
 
-    return <Dashboard/>
+    return (
+      <Dashboard
+        appointment={appointments?.data?.results[0]}
+        totalAppointment={appointments?.data?.totalResults || 0}
+      />
+    );
   } catch (e) {
     console.log(e);
     notFound();
   }
 }
-

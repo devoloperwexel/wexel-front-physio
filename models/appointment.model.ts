@@ -5,6 +5,7 @@ export default interface Appointment {
   videoCallUrl: string;
   appointmentTime: string;
   doctorDetail: DoctorDetail;
+  patientDetail: any;
   note?: string;
   sessionTime:number;
   createdAt: string;
