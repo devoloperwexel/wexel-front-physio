@@ -1,17 +1,18 @@
 'use client';
 
+import { Questionnaire } from 'models/questionnaire.model';
 import { FC, useState, useCallback } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
-interface Question {
-  id: string;
-  requiredRef?: { id: string; value: string };
-  questionText: string;
-  values?: string[];
-  type: QuestionType;
-  info?: string;
-  answer?: string;
-}
+// interface Question {
+//   id: string;
+//   questionText: string;
+//   type: QuestionType;
+//   values?: string[]; 
+//   info?: string | null | undefined; 
+//   requiredRef?: { id: string; value: string } | null;
+//   answer?: string | undefined;
+// }
 
 type QuestionType = "RADIO" | "TEXTAREA" | "CHECKBOX" | "TOPIC_QUESTION";
 
@@ -21,10 +22,7 @@ interface MedicalScreeningProps {
   result: string;
   summary: { color: string; count: number }[];
   actions: string[];
-  sections: {
-    title: string;
-    questions: Question[];
-  }[];
+  sections: Questionnaire;
 }
 
 const MedicalScreeningView: FC<MedicalScreeningProps> = ({
@@ -44,7 +42,7 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
     [expandedSection]
   );
 
-  const renderAnswers = (type: QuestionType, answer?: string) => {
+  const renderAnswers = (type: QuestionType, answer?: string | null) => {
 
     switch (type) {
       case "RADIO":
@@ -64,22 +62,21 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
                 type="radio"
                 value="No"
                 checked={answer === "No"}
-                className="mr-2 items-center appearance-none w-[13px] h-[13px] border-[1px] border-black rounded-full checked:bg-primary-color checked:border-primary-color"
+                className={`mr-2 items-center appearance-none w-[13px] h-[13px] border-[1px] border-black rounded-full checked:bg-primary-color checked:border-primary-color`}
               />
               No
             </label>
           </div>
         );
-      case "TEXTAREA":
-        return (
-          <textarea
-            className="w-full p-2 border rounded"
-            value={answer}
-            rows={4}
-            placeholder="Enter your answer"
-          />
-        );
-      
+       
+        case "TEXTAREA":
+          return ( 
+            <input
+              className="w-[80%] p-2 border rounded"
+              value={answer??""}
+            />
+          ) 
+
         case "CHECKBOX":
           return (
             <input
@@ -88,10 +85,6 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
               className="mr-2"
             />
           );
-        case "TOPIC_QUESTION":
-          return(
-            <></>
-          )
       default:
         return null;
     }
@@ -169,8 +162,8 @@ const MedicalScreeningView: FC<MedicalScreeningProps> = ({
                   <div className="border border-gray-200 p-2 bg-primary-color/10">
                     {section.questions.map((q, qIdx) => (
                       <div key={qIdx} className="mb-2 flex justify-between items-center p-1">
-                        <div className="font-medium" dangerouslySetInnerHTML={{ __html: q.questionText }} />
-                        {renderAnswers(q.type,q.answer)}
+                        {q.requiredRef && q.requiredRef.value === "No" ? null : <div className="font-medium" dangerouslySetInnerHTML={{ __html: q.questionText }} />}
+                        {q.requiredRef && q.requiredRef.value === "No" ? null : renderAnswers(q.type, q.answer)}
                       </div>
                     ))}
                   </div>
