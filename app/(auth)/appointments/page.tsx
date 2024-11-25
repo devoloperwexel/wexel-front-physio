@@ -8,7 +8,7 @@ export default async function page() {
   try {
     const authRes = await auth();
     const appointments = await request(API.GET_APPOINTMENTS, {
-      query: `doctorId=${authRes?.user.id}`,
+      query: `doctorUserId=${authRes?.user.id}`,
     });
     return <Appointments appointments={appointments?.data?.results} />;
   } catch (error) {

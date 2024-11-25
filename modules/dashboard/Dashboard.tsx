@@ -17,7 +17,7 @@ export default function Dashboard({
   appointments,
   totalAppointment,
 }: Props) {
-  const { id, patientDetail } = appointment;
+
 
   return (
     <>
@@ -34,12 +34,12 @@ export default function Dashboard({
         <div className="flex flex-col md:flex-col lg:flex-row gap-10 md:gap-20 w-full 2xl:w-[80%] xl:w-[80%]">
           <div className="flex-1">
             <EventCard
-              appointmentId={id}
+              appointmentId={appointment?.id}
               title="Upcoming Appointment"
               physioName={"Patient's name"}
-              eventTitle={patientDetail.name}
+              eventTitle={appointment?.patientDetail.name}
               eventDateTime={formatDashboardDateTime(
-                appointment.appointmentTime
+                appointment?.appointmentTime
               )}
               duration={"30 Min"}
             />

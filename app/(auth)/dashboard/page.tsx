@@ -12,13 +12,14 @@ export default async function page() {
     const formattedCurrentDate = currentDate.toISOString().split("T")[0];
     currentDate.setDate(currentDate.getDate() + 1);
     const formattedNextDate = currentDate.toISOString().split("T")[0];
+console.log(authRes);
 
     const appointment = await request(API.GET_APPOINTMENTS, {
-      query: `doctorId=${authRes?.user.id}&appointmentDateFrom=${formattedCurrentDate}&appointmentDateTo=${formattedNextDate}&limit=1&appointmentTime:desc`,
+      query: `doctorUserId=${authRes?.user.id}&appointmentDateFrom=${formattedCurrentDate}&appointmentDateTo=${formattedNextDate}&limit=1&appointmentTime:desc`,
     });
 
     const appointments = await request(API.GET_APPOINTMENTS, {
-      query: `doctorId=${authRes?.user.id}&limit=10&appointmentTime:desc`,
+      query: `doctorUserId=${authRes?.user.id}&limit=10&appointmentTime:desc`,
     });
 
     return (

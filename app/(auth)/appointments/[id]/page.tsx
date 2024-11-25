@@ -9,7 +9,7 @@ export default async function page({ params }: { params: { id: string } }) {
     const authRes = await auth();
 
     const appointments = await request(API.GET_APPOINTMENTS, {
-      query: `doctorId=${authRes?.user.id}&appointmentId=${params.id}&limit=1`,
+      query: `doctorUserId=${authRes?.user.id}&appointmentId=${params.id}&limit=1`,
     });
 
     return (
