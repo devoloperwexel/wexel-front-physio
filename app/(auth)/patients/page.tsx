@@ -8,7 +8,7 @@ import request from "utils/request";
 export default async function page() {
   const authRes = await auth();
   const patients = await request(API.GET_USERS, {
-    query: `doctorId=${authRes?.user.id}&limit=10&role=user`,
+    query: `doctorUserId=${authRes?.user.id}&limit=10&role=user`,
   });
 
   return (
