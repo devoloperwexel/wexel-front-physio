@@ -8,12 +8,13 @@ export default async function page({ params }: { params: { id: string } }) {
   try {
     const authRes = await auth();
 
-    const appointment = await request(API.GET_APPOINTMENT, {
-      userId: authRes?.user.id,
-      appointmentId: params?.id,
+    const appointments = await request(API.GET_APPOINTMENTS, {
+      query: `doctorUserId=${authRes?.user.id}&appointmentId=${params.id}&limit=1`,
     });
 
-    return <AppointmentPageView appointment={appointment.data} />;
+    return (
+      <AppointmentPageView appointment={appointments?.data?.results?.[0]} />
+    );
   } catch (e) {
     console.log(e);
     notFound();

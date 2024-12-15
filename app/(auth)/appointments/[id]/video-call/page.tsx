@@ -9,10 +9,12 @@ export default async function page({ params }: { params: { id: string } }) {
     const authRes = await auth();
     const appointmentId = params?.id;
     //
+    console.log(authRes?.user.id);
     const tokenData = await request(API.GET_ZOOM_TOKEN, {
       userId: authRes?.user.id,
       appointmentId: params?.id,
     });
+
 
     return (
       <VideoCallPageView

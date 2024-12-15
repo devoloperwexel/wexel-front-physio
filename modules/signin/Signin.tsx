@@ -69,148 +69,151 @@ const SigninPageView = () => {
 
   return (
     <div style={{ width: "100%" }}>
-    <Box
-      height="100vh"
-      display="flex"
-      flexDirection={{ xs: "column", md: "row" }}
-      alignItems="center"
-    >
-      {/* Hide SignupBanner on small screens */}
       <Box
-        width={{ xs: "100%", md: "50%" }}
-        display={{ xs: "none", md: "flex" }}
-        justifyContent="center"
-        alignItems="center"
-        height="100%"
-      >
-        <SignupBanner />
-      </Box>
-
-      <Box
-        height="100%"
-        width={{ xs: "100%", md: "50%" }}
+        height="100vh"
         display="flex"
-        flexDirection="column"
-        justifyContent="center"
+        flexDirection={{ xs: "column", md: "row" }}
         alignItems="center"
-        padding={{ xs: "40px", md: "80px" }}
       >
-        <Box display="flex" width="100%" justifyContent="end" mb={2}>
+        {/* Hide SignupBanner on small screens */}
+        <Box
+          width={{ xs: "100%", md: "50%" }}
+          display={{ xs: "none", md: "flex" }}
+          justifyContent="center"
+          alignItems="center"
+          height="100%"
+        >
+          <SignupBanner />
+        </Box>
+
+        <Box
+          height="100%"
+          width={{ xs: "100%", md: "50%" }}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          padding={{ xs: "40px", md: "80px" }}
+        >
+          {/* <Box display="flex" width="100%" justifyContent="end" mb={2}>
           <Button sx={{ textTransform: "none", color: "#000000" }}>Help</Button>
           <ContainedButton onClick={() => router.push("/signup")}>
             Register
           </ContainedButton>
-        </Box>
+        </Box> */}
 
-        <Box width="100%">
-          <Typography component="h5" fontSize="25px" fontWeight="700" textAlign="center">
-            Login to your account
-          </Typography>
-          <Box mt={3}>
-          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-            <TextField
-              fullWidth
-              onChange={handleChange}
-              name="email"
-              label="Email"
-              variant="outlined"
-              type="text"
-              value={values.email}
-              helperText={touched.email && errors.email}
-              error={touched.email && Boolean(errors.email)}
-              sx={{ marginBottom: 3 }}
-            />
-            <PasswordFelid
-              fullWidth
-              onChange={handleChange}
-              name="password"
-              value={values.password}
-              helperText={touched.password && errors.password}
-              error={touched.password && Boolean(errors.password)}
-              label="Password"
-            />
-            <Box
-              display="flex"
-              justifyContent="end"
-              marginY={3}
+          <Box width="100%">
+            <Typography
+              component="h5"
+              fontSize="25px"
+              fontWeight="700"
+              textAlign="center"
             >
-              <Link
-                href="/"
-              >
-                Forgot Password?
-              </Link>
+              Login to your account
+            </Typography>
+            <Box mt={3}>
+              <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+                <TextField
+                  fullWidth
+                  onChange={handleChange}
+                  name="email"
+                  label="Email"
+                  variant="outlined"
+                  type="text"
+                  value={values.email}
+                  helperText={touched.email && errors.email}
+                  error={touched.email && Boolean(errors.email)}
+                  sx={{ marginBottom: 3 }}
+                />
+                <PasswordFelid
+                  fullWidth
+                  onChange={handleChange}
+                  name="password"
+                  value={values.password}
+                  helperText={touched.password && errors.password}
+                  error={touched.password && Boolean(errors.password)}
+                  label="Password"
+                />
+                <Box display="flex" justifyContent="end" marginY={3}>
+                  <Link href="/">Forgot Password?</Link>
+                </Box>
+                <Divider textAlign="center" flexItem sx={{ marginY: 2.5 }}>
+                  OR
+                </Divider>
+                <Box
+                  display="flex"
+                  gap={1.5}
+                  justifyContent="space-between"
+                  mt={2}
+                  width="100%"
+                >
+                  <Tooltip title="Login with Google">
+                    <Button
+                      variant="outlined"
+                      fullWidth
+                      sx={{ height: "50px", borderColor: "grey.500" }}
+                      onClick={handleGoogleSignin}
+                    >
+                      <GoogleSvg />
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title="Login with Apple">
+                    <Button
+                      variant="outlined"
+                      fullWidth
+                      sx={{ height: "50px", borderColor: "grey.500" }}
+                    >
+                      <AppleIcon sx={{ color: "#555555", fontSize: "32px" }} />
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title="Login with Facebook">
+                    <Button
+                      variant="outlined"
+                      fullWidth
+                      sx={{ height: "50px", borderColor: "grey.500" }}
+                    >
+                      <FacebookSvg />
+                    </Button>
+                  </Tooltip>
+                </Box>
+                <ContainedButton
+                  fullWidth
+                  type="submit"
+                  disabled={isSubmitting}
+                  sx={{ height: "42px", fontWeight: 600, marginTop: "30px" }}
+                >
+                  Login and Continue
+                </ContainedButton>
+                <Box
+                  width="100%"
+                  display="flex"
+                  justifyContent="center"
+                  mt={2}
+                  color="#6C6C6C"
+                >
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    marginTop={1.8}
+                    width="100%"
+                  >
+                    <div style={{ color: "#6C6C6C" }}>
+                      Don&apos;t have an account? 
+                    </div>
+                    <Link
+                      href="/signup"
+                      style={{ color: "#A51008", textDecoration: "underline" }}
+                    >
+                      Sign Up Now
+                    </Link>
+                  </Box>
+                </Box>
+              </form>
             </Box>
-            
-          </form>
-          </Box>
-
-          <Divider textAlign="center" flexItem sx={{ marginY: 2.5 }}>
-            OR
-          </Divider>
-          <Box display="flex" gap={1.5} justifyContent="space-between" mt={2} width="100%">
-            <Tooltip title="Login with Google">
-              <Button
-                variant="outlined"
-                fullWidth
-                sx={{ height: "50px", borderColor: "grey.500" }}
-                onClick={handleGoogleSignin}
-              >
-                <GoogleSvg />
-              </Button>
-            </Tooltip>
-            <Tooltip title="Login with Apple">
-              <Button
-                variant="outlined"
-                fullWidth
-                sx={{ height: "50px", borderColor: "grey.500" }}
-              >
-                <AppleIcon sx={{ color: "#555555", fontSize: "32px" }} />
-              </Button>
-            </Tooltip>
-            <Tooltip title="Login with Facebook">
-              <Button
-                variant="outlined"
-                fullWidth
-                sx={{ height: "50px", borderColor: "grey.500" }}
-              >
-                <FacebookSvg />
-              </Button>
-            </Tooltip>
-          </Box>
-          <ContainedButton
-              fullWidth
-              type="submit"
-              disabled={isSubmitting}
-              sx={{ height: "42px", fontWeight: 600, marginTop: "30px" }}
-            >
-              Login and Continue
-            </ContainedButton>
-          <Box
-            width="100%"
-            display="flex"
-            justifyContent="center"
-            mt={2}
-            color="#6C6C6C"
-          >
-            <Box
-          display="flex"
-          justifyContent="center"
-          marginTop={1.8}
-          width="100%"
-        >
-          <div style={{ color: "#6C6C6C" }}>Don&apos;t have an account? </div>
-          <Link
-            href="/signup"
-            style={{ color: "#A51008", textDecoration: "underline" }}
-          >
-            Sign Up Now
-          </Link>
-        </Box>
           </Box>
         </Box>
       </Box>
-    </Box>
-  </div>
+    </div>
   );
 };
 

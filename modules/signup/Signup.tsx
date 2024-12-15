@@ -122,15 +122,20 @@ const SignupPageView = () => {
           alignItems="center"
           padding={{ xs: "40px", md: "80px" }}
         >
-          <Box display="flex" width="100%" justifyContent="end" mb={2}>
+          {/* <Box display="flex" width="100%" justifyContent="end" mb={2}>
             <Button sx={{ textTransform: "none", color: "#000000" }}>Help</Button>
             <ContainedButton onClick={() => router.push("/signin")}>
               Login
             </ContainedButton>
-          </Box>
+          </Box> */}
 
           <Box width="100%">
-            <Typography component="h5" fontSize="25px" fontWeight="700" textAlign="center">
+            <Typography
+              component="h5"
+              fontSize="25px"
+              fontWeight="700"
+              textAlign="center"
+            >
               Sign Up on WexelCode
             </Typography>
             <Box mt={3}>
@@ -171,81 +176,119 @@ const SignupPageView = () => {
                   name="confirmPassword"
                   value={values.confirmPassword}
                   helperText={touched.confirmPassword && errors.confirmPassword}
-                  error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+                  error={
+                    touched.confirmPassword && Boolean(errors.confirmPassword)
+                  }
                   label="Confirm Password"
                 />
-              </form>
-            </Box>
-
-            <Divider textAlign="center" flexItem sx={{ marginY: 2.5 }}>
-              OR
-            </Divider>
-            <Box display="flex" gap={1.5} justifyContent="space-between" mt={2} width="100%">
-              <Tooltip title="Login with Google">
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  sx={{ height: "50px", borderColor: "grey.500", justifyContent:"center",alignItems:"center" }}
-                  onClick={handleGoogleSignup}
+                <Divider textAlign="center" flexItem sx={{ marginY: 2.5 }}>
+                  OR
+                </Divider>
+                <Box
+                  display="flex"
+                  gap={1.5}
+                  justifyContent="space-between"
+                  mt={2}
+                  width="100%"
                 >
-                  <GoogleSvg />
-                </Button>
-              </Tooltip>
-              <Tooltip title="Login with Apple">
-                <Button
-                  variant="outlined"
+                  <Tooltip title="Login with Google">
+                    <Button
+                      variant="outlined"
+                      fullWidth
+                      sx={{
+                        height: "50px",
+                        borderColor: "grey.500",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                      onClick={handleGoogleSignup}
+                    >
+                      <GoogleSvg />
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title="Login with Apple">
+                    <Button
+                      variant="outlined"
+                      fullWidth
+                      sx={{ height: "50px", borderColor: "grey.500" }}
+                    >
+                      <AppleIcon sx={{ color: "#555555", fontSize: "33px" }} />
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title="Login with Facebook">
+                    <Button
+                      variant="outlined"
+                      fullWidth
+                      sx={{
+                        height: "50px",
+                        borderColor: "grey.500",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <FacebookSvg />
+                    </Button>
+                  </Tooltip>
+                </Box>
+                <FormControlLabel
+                  label={
+                    <Box display="flex" fontSize={14}>
+                      <div>I agree to the WexelCode</div>
+                      <Link
+                        href="#"
+                        style={{
+                          textDecoration: "underline",
+                          paddingLeft: "10px",
+                        }}
+                      >
+                        Terms of Service
+                      </Link>
+                      <div style={{ paddingLeft: "10px" }}>and</div>
+                      <Link
+                        href="#"
+                        style={{
+                          textDecoration: "underline",
+                          paddingLeft: "10px",
+                        }}
+                      >
+                        Privacy Policy
+                      </Link>
+                    </Box>
+                  }
+                  control={
+                    <Checkbox
+                      name="isAgree"
+                      checked={values.isAgree}
+                      size="small"
+                    />
+                  }
+                  onChange={handleChange}
+                  sx={{ marginY: 2.5 }}
+                />
+                <ContainedButton
                   fullWidth
-                  sx={{ height: "50px", borderColor: "grey.500" }}
+                  type="submit"
+                  disabled={isSubmitting}
+                  sx={{ height: "42px", fontWeight: 600, mt: 2 }}
                 >
-                  <AppleIcon sx={{ color: "#555555", fontSize: "33px" }} />
-                </Button>
-              </Tooltip>
-              <Tooltip title="Login with Facebook">
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  sx={{ height: "50px", borderColor: "grey.500", justifyContent:"center",alignItems:"center" }}
+                  Sign Up
+                </ContainedButton>
+                <Box
+                  width="100%"
+                  display="flex"
+                  justifyContent="center"
+                  mt={2}
+                  color="#6C6C6C"
                 >
-                  <FacebookSvg />
-                </Button>
-              </Tooltip>
-            </Box>
-            <FormControlLabel
-              label={
-                <Box display="flex" fontSize={14}>
-                  <div>I agree to the WexelCode</div>
-                  <Link href="#" style={{ textDecoration: "underline", paddingLeft:"10px" }}>
-                    Terms of Service
-                  </Link>
-                  <div style={{ paddingLeft:"10px" }}>and</div>
-                  <Link href="#" style={{ textDecoration: "underline",paddingLeft:"10px" }}>
-                    Privacy Policy
+                  <div>Already have an account?&nbsp;</div>
+                  <Link
+                    href="/signin"
+                    style={{ color: "#A51008", textDecoration: "underline" }}
+                  >
+                    Login here
                   </Link>
                 </Box>
-              }
-              control={<Checkbox name="isAgree" checked={values.isAgree} size="small" />}
-              onChange={handleChange}
-              sx={{ marginY: 2.5 }}
-            />
-            <ContainedButton
-              fullWidth
-              type="submit"
-              disabled={isSubmitting}
-              sx={{ height: "42px", fontWeight: 600, mt: 2 }}
-            >
-              Sign Up
-            </ContainedButton>
-            <Box
-              width="100%"
-              display="flex"
-              justifyContent="center"
-              mt={2}
-              color="#6C6C6C"
-            >
-              <div>Already have an account?&nbsp;</div>
-              <Link href="/signin" style={{ color: "#A51008", textDecoration: "underline" }}>
-                Login here
-              </Link>
+              </form>
             </Box>
           </Box>
         </Box>
